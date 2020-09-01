@@ -1,8 +1,11 @@
 from math import floor
 from random import randint
+from inky import InkyWHAT
 
 from PIL import Image, ImageDraw
 
+inky_display = InkyWHAT("red")
+inky_display.set_border(inky_display.WHITE)
 rules = [18, 22, 26, 30, 45, 57, 60, 62, 73, 75, 82, 86, 89, 90, 101, 102, 105, 109, 110, 124, 126, 129, 131, 135, 137,
          145, 146, 149, 150, 153, 154, 161, 165, 167, 181, 182, 190, 193, 195, 210, 214, 218, 225]
 
@@ -16,8 +19,8 @@ for i in range(0, 8):
 
 print(ruleset)
 
-width = 400
-height = 300
+width = inky_display.WIDTH
+height = inky_display.HEIGHT
 
 cellSize = randint(1, 5)
 rectSize = cellSize - 1
@@ -33,7 +36,7 @@ print("Width: %s, Height %s, Visible Generations: %s, Cells: %s, Centre: %s" %
 
 cells[randint(0, numCells - 1)] = 1
 
-img = Image.new('RGB', (width, height), color='white')
+img = Image.new('P', (inky_display.WIDTH, inky_display.HEIGHT))
 draw = ImageDraw.Draw(img)
 
 for generation in range(0, visibleGenerations * 2):
@@ -86,5 +89,5 @@ for generation in range(0, visibleGenerations * 2):
         else:
             draw.rectangle([(x, y), (x + rectSize, y + rectSize)], fill='white')
 
-img.save("example.png")
-# img.show()
+inky_display.set_image(img)
+inky_display.show()
